@@ -254,3 +254,34 @@ def crawl_issues(target_new_issues=15):
                 })
 
     return crawled_issues, scanned_total
+
+def sync_closed_issues(max_check=25):
+    """
+    Tự động kiểm tra các issue cũ trong DB:
+    Nếu issue đã bị đóng hoặc đã được merge PR trên GitHub -> cập nhật status = 'closed' trong DB.
+    """
+    from src.database import get_open_issues, mark_issue_closed
+    
+    open_issues = get_open_issues(limit=max_check)
+    if not open_issues:
+        return 0
+        
+    closed_count = 0
+    print(f"\n[*] Đang kiểm tra trạng thái {len(open_issues)} issues trong DB xem có issue nào đã được giải quyết...")
+    
+    for issue in open_issues:
+        repo_name = issue["repo_name"]
+        issue_number = issue["issue_number"]
+        issue_url = f"https://api.github.com/repos/{repo_name}/issues/{issue_number}"
+        
+        data = github_api(issue_url)
+        if not data:
+            continue
+            
+        state = data.get("state")
+        if state == "closed":
+            mark_issue_closed(issue["id"])
+            closed_count += 1
+            print(f"    [✔ ĐÃ GIẢI QUYẾT] #{issue_number} ({repo_name}) đã đóng trên GitHub -> Ẩn khỏi danh sách active!")
+
+    return closed_count

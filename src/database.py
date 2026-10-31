@@ -114,15 +114,50 @@ def record_crawl_log(scanned_count, added_count, status="success", message=""):
     conn.commit()
     conn.close()
 
-def get_all_issues(limit=200):
+def mark_issue_closed(issue_id):
+    """Cập nhật trạng thái issue đã được sửa / đóng trên GitHub"""
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    now = datetime.utcnow().isoformat() + "Z"
+    cursor.execute("UPDATE issues SET status = 'closed', updated_at = ? WHERE id = ?", (now, issue_id))
+    conn.commit()
+    conn.close()
+
+def get_open_issues(limit=50):
+    """Lấy danh sách các issue đang ở trạng thái mở trong DB để kiểm tra trạng thái"""
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
     cursor.execute("""
-    SELECT * FROM issues 
-    ORDER BY agent_score DESC, crawled_at DESC 
+    SELECT id, repo_name, issue_number, title, html_url 
+    FROM issues 
+    WHERE status != 'closed' 
+    ORDER BY updated_at ASC 
     LIMIT ?
     """, (limit,))
+    rows = cursor.fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+def get_all_issues(limit=200, only_active=True):
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    
+    if only_active:
+        cursor.execute("""
+        SELECT * FROM issues 
+        WHERE status != 'closed'
+        ORDER BY agent_score DESC, crawled_at DESC 
+        LIMIT ?
+        """, (limit,))
+    else:
+        cursor.execute("""
+        SELECT * FROM issues 
+        ORDER BY agent_score DESC, crawled_at DESC 
+        LIMIT ?
+        """, (limit,))
+        
     rows = cursor.fetchall()
     conn.close()
     
@@ -142,11 +177,17 @@ def get_stats():
     
     cursor.execute("SELECT COUNT(*) FROM issues")
     total_issues = cursor.fetchone()[0]
+
+    cursor.execute("SELECT COUNT(*) FROM issues WHERE status != 'closed'")
+    active_issues = cursor.fetchone()[0]
+
+    cursor.execute("SELECT COUNT(*) FROM issues WHERE status = 'closed'")
+    closed_issues = cursor.fetchone()[0]
     
-    cursor.execute("SELECT COUNT(*) FROM issues WHERE merge_velocity_hours > 0 AND merge_velocity_hours <= 24")
+    cursor.execute("SELECT COUNT(*) FROM issues WHERE status != 'closed' AND merge_velocity_hours > 0 AND merge_velocity_hours <= 24")
     fast_merge_count = cursor.fetchone()[0]
     
-    cursor.execute("SELECT COUNT(DISTINCT repo_name) FROM issues")
+    cursor.execute("SELECT COUNT(DISTINCT repo_name) FROM issues WHERE status != 'closed'")
     total_repos = cursor.fetchone()[0]
     
     cursor.execute("SELECT timestamp FROM crawl_history ORDER BY id DESC LIMIT 1")
@@ -156,6 +197,8 @@ def get_stats():
     conn.close()
     return {
         "total_issues": total_issues,
+        "active_issues": active_issues,
+        "closed_issues": closed_issues,
         "fast_merge_count": fast_merge_count,
         "total_repos": total_repos,
         "last_crawl": last_crawl

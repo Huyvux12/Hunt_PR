@@ -81,15 +81,15 @@
       </div>
 
       <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5 shadow-sm">
-        <p class="text-xs font-medium text-slate-400">📦 Tổng Issues Trong DB</p>
+        <p class="text-xs font-medium text-slate-400">📦 Issues Đang Mở</p>
         <p id="stat-total-issues" class="text-xl font-bold text-blue-400 mt-1">0</p>
-        <p class="text-[11px] text-slate-500 mt-0.5">Đã lọc và lưu trữ</p>
+        <p class="text-[11px] text-slate-500 mt-0.5">Chưa ai giải quyết</p>
       </div>
 
       <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5 shadow-sm">
-        <p class="text-xs font-medium text-slate-400">🏢 Repos Uy Tín</p>
-        <p id="stat-total-repos" class="text-xl font-bold text-purple-400 mt-1">0</p>
-        <p class="text-[11px] text-slate-500 mt-0.5">&ge; 100 Stars, Active</p>
+        <p class="text-xs font-medium text-slate-400">✔ Đã Giải Quyết (Closed)</p>
+        <p id="stat-closed-issues" class="text-xl font-bold text-purple-400 mt-1">0</p>
+        <p class="text-[11px] text-slate-500 mt-0.5">Tự động ẩn khỏi web</p>
       </div>
     </div>
 
@@ -241,8 +241,8 @@
       document.getElementById('stat-top-count').textContent = appData.top_10 ? appData.top_10.length : 0;
       document.getElementById('stat-fast-count').textContent = stats.fast_merge_count || 0;
       document.getElementById('stat-trans-count').textContent = appData.translation_projects ? appData.translation_projects.length : 0;
-      document.getElementById('stat-total-issues').textContent = stats.total_issues || 0;
-      document.getElementById('stat-total-repos').textContent = stats.total_repos || 0;
+      document.getElementById('stat-total-issues').textContent = stats.active_issues || stats.total_issues || 0;
+      document.getElementById('stat-closed-issues').textContent = stats.closed_issues || 0;
 
       if (appData.generated_at) {
         const d = new Date(appData.generated_at);
