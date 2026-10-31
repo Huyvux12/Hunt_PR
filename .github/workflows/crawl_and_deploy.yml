@@ -52,8 +52,8 @@ jobs:
 
       - name: 💾 Lưu Database & Web Data vào Git
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "Huyvux12"
+          git config --global user.email "vutienhuy.k51a2@gmail.com"
           git add data/issues.db web/data.json
           git diff --quiet && git diff --staged --quiet || (git commit -m "chore: auto-update crawled issues and web data [skip ci]" && git push)
 
