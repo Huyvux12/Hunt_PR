@@ -1,10 +1,11 @@
 {
-  "generated_at": "2026-10-31T05:58:38.920421+00:00",
+  "generated_at": "2026-10-31T17:57:45.459531+00:00",
   "stats": {
     "total_issues": 3,
     "fast_merge_count": 2,
     "total_repos": 2,
-    "last_crawl": "2026-10-31T05:56:04.897266Z"
+    "last_crawl": "2026-10-31T05:56:04.897266Z",
+    "total_translation_projects": 10
   },
   "top_10": [
     {
@@ -154,6 +155,253 @@
       "has_code_block": 1,
       "crawled_at": "2026-10-31T05:58:28.148642Z",
       "status": "new"
+    }
+  ],
+  "translation_projects": [
+    {
+      "id": "fastapi",
+      "name": "FastAPI",
+      "repo_name": "tiangolo/fastapi",
+      "repo_url": "https://github.com/tiangolo/fastapi",
+      "stars": 78500,
+      "language": "Python",
+      "category": "Backend Framework",
+      "target_dir": "docs/vi/docs/",
+      "status": "Đang mở đợt dịch lớn",
+      "merge_speed": "🔥 Cực nhanh (Maintainer merge đều)",
+      "description": "Tác giả Sebastián Ramírez mở hẳn chuyên mục dịch docs sang Tiếng Việt. Mỗi trang tutorial được tính là 1 PR riêng biệt vào repo chính.",
+      "coordination_url": "https://github.com/tiangolo/fastapi/discussions",
+      "guide_url": "https://fastapi.tiangolo.com/vi/contributing/#translations",
+      "sample_files": [
+        "docs/en/docs/tutorial/first-steps.md",
+        "docs/en/docs/tutorial/path-params.md",
+        "docs/en/docs/tutorial/query-params.md"
+      ],
+      "tags": [
+        "Python",
+        "FastAPI",
+        "Tutorial",
+        "Hot"
+      ]
+    },
+    {
+      "id": "react",
+      "name": "React Official Docs (vi.react.dev)",
+      "repo_name": "reactjs/vi.react.dev",
+      "repo_url": "https://github.com/reactjs/vi.react.dev",
+      "stars": 235000,
+      "language": "JavaScript / React",
+      "category": "Frontend Framework",
+      "target_dir": "src/content/",
+      "status": "Cộng đồng tích cực dịch React 19",
+      "merge_speed": "✅ Dễ (Review thân thiện)",
+      "description": "Dự án chính thức của React (Meta) dịch toàn bộ tài liệu react.dev sang tiếng Việt. Có danh sách issue cho từng trang chưa dịch.",
+      "coordination_url": "https://github.com/reactjs/vi.react.dev/issues",
+      "guide_url": "https://github.com/reactjs/vi.react.dev/blob/main/CONTRIBUTING.md",
+      "sample_files": [
+        "src/content/learn/",
+        "src/content/reference/react/"
+      ],
+      "tags": [
+        "React",
+        "Frontend",
+        "JavaScript",
+        "Official"
+      ]
+    },
+    {
+      "id": "freecodecamp",
+      "name": "freeCodeCamp",
+      "repo_name": "freeCodeCamp/freeCodeCamp",
+      "repo_url": "https://github.com/freeCodeCamp/freeCodeCamp",
+      "stars": 405000,
+      "language": "Curriculum / Markdown",
+      "category": "Education / Coding",
+      "target_dir": "curriculum/challenges/vietnamese/",
+      "status": "Chào đón liên tục",
+      "merge_speed": "🔥 Cực nhanh (Bot + Mod hỗ trợ)",
+      "description": "Dự án mã nguồn mở nhiều Stars nhất GitHub. Cần dịch các bài thử thách lập trình (Coding Challenges) và bài viết sang Tiếng Việt.",
+      "coordination_url": "https://github.com/freeCodeCamp/freeCodeCamp/labels/i18n",
+      "guide_url": "https://contribute.freecodecamp.org/#/how-to-translate-files",
+      "sample_files": [
+        "curriculum/challenges/english/01-responsive-web-design/"
+      ],
+      "tags": [
+        "Beginner",
+        "HTML/CSS",
+        "JavaScript",
+        "Top Stars"
+      ]
+    },
+    {
+      "id": "developer-roadmap",
+      "name": "Developer Roadmap",
+      "repo_name": "kamranahmedse/developer-roadmap",
+      "repo_url": "https://github.com/kamranahmedse/developer-roadmap",
+      "stars": 315000,
+      "language": "Markdown / TypeScript",
+      "category": "Career Roadmaps",
+      "target_dir": "src/data/roadmaps/",
+      "status": "Tuyển dịch roadmap tiếng Việt",
+      "merge_speed": "✅ Dễ (PR ngắn, duyệt nhanh)",
+      "description": "Bản đồ nghề nghiệp lập trình viên số 1 thế giới (Frontend, Backend, DevOps, AI...). Đang cần dịch nội dung chi tiết các roadmap sang tiếng Việt.",
+      "coordination_url": "https://github.com/kamranahmedse/developer-roadmap/issues?q=is%3Aissue+vietnamese",
+      "guide_url": "https://github.com/kamranahmedse/developer-roadmap/blob/master/CONTRIBUTING.md",
+      "sample_files": [
+        "src/data/roadmaps/frontend/content/",
+        "src/data/roadmaps/backend/content/"
+      ],
+      "tags": [
+        "Roadmap",
+        "Guide",
+        "High Visibility"
+      ]
+    },
+    {
+      "id": "python-docs",
+      "name": "Python Official Documentation",
+      "repo_name": "python/python-docs-vi",
+      "repo_url": "https://github.com/python/python-docs-vi",
+      "stars": 65000,
+      "language": "Python / Gettext PO",
+      "category": "Core Language",
+      "target_dir": "cpython/",
+      "status": "Đang mở theo PEP 545",
+      "merge_speed": "✅ Dễ (Team Python VN điều phối)",
+      "description": "Tài liệu chính thức của Python Software Foundation (docs.python.org/vi). Hướng dẫn dịch các chương thư viện chuẩn và tutorial sang Tiếng Việt.",
+      "coordination_url": "https://github.com/python/python-docs-vi/issues",
+      "guide_url": "https://github.com/python/python-docs-vi/blob/master/CONTRIBUTING.md",
+      "sample_files": [
+        "tutorial/",
+        "library/"
+      ],
+      "tags": [
+        "Python",
+        "Core",
+        "Official PEP"
+      ]
+    },
+    {
+      "id": "vuejs",
+      "name": "Vue.js 3 Official Docs",
+      "repo_name": "vuejs-translations/docs-vi",
+      "repo_url": "https://github.com/vuejs-translations/docs-vi",
+      "stars": 215000,
+      "language": "Markdown / Vue",
+      "category": "Frontend Framework",
+      "target_dir": "src/",
+      "status": "Đang đồng bộ Vue 3",
+      "merge_speed": "✅ Dễ (Cộng đồng Vue VN)",
+      "description": "Bản dịch tiếng Việt chính thức cho trang tài liệu Vue 3 (vuejs.org). Thường xuyên có các issue đồng bộ trang mới từ bản gốc tiếng Anh.",
+      "coordination_url": "https://github.com/vuejs-translations/docs-vi/issues",
+      "guide_url": "https://github.com/vuejs-translations/docs-vi/blob/main/CONTRIBUTING.md",
+      "sample_files": [
+        "src/guide/essentials/",
+        "src/guide/components/"
+      ],
+      "tags": [
+        "Vue",
+        "Frontend",
+        "JavaScript"
+      ]
+    },
+    {
+      "id": "kubernetes",
+      "name": "Kubernetes Website (SIG Docs Vi)",
+      "repo_name": "kubernetes/website",
+      "repo_url": "https://github.com/kubernetes/website",
+      "stars": 19000,
+      "language": "Hugo / Markdown",
+      "category": "Cloud & DevOps",
+      "target_dir": "content/vi/",
+      "status": "Nhóm SIG Docs Vi đang hoạt động",
+      "merge_speed": "⚡ Chuyên nghiệp (Review qua PR)",
+      "description": "Dự án Kubernetes của Linux Foundation. Nhóm bản địa hóa tiếng Việt (SIG Docs Vietnamese) luôn chào đón PR dịch các trang hướng dẫn K8s.",
+      "coordination_url": "https://github.com/kubernetes/website/issues?q=is%3Aissue+vietnamese",
+      "guide_url": "https://kubernetes.io/docs/contribute/localization/",
+      "sample_files": [
+        "content/vi/docs/tutorials/",
+        "content/vi/docs/concepts/"
+      ],
+      "tags": [
+        "DevOps",
+        "Kubernetes",
+        "CNCF",
+        "Enterprise"
+      ]
+    },
+    {
+      "id": "vite",
+      "name": "Vite Build Tool",
+      "repo_name": "vitejs/docs-vi",
+      "repo_url": "https://github.com/vitejs/docs-vi",
+      "stars": 72000,
+      "language": "Markdown / VitePress",
+      "category": "Build Tools",
+      "target_dir": "/",
+      "status": "Dịch docs Vite tiếng Việt",
+      "merge_speed": "🔥 Cực nhanh",
+      "description": "Bản dịch tài liệu chính thức của Vite - công cụ build frontend thế hệ mới của Evan You. Docs ngắn gọn, rất dễ dịch và merge.",
+      "coordination_url": "https://github.com/vitejs/docs-vi/issues",
+      "guide_url": "https://github.com/vitejs/docs-vi/blob/main/CONTRIBUTING.md",
+      "sample_files": [
+        "guide/",
+        "config/"
+      ],
+      "tags": [
+        "Vite",
+        "Build Tool",
+        "Dễ làm"
+      ]
+    },
+    {
+      "id": "astro",
+      "name": "Astro Docs",
+      "repo_name": "withastro/docs",
+      "repo_url": "https://github.com/withastro/docs",
+      "stars": 55000,
+      "language": "Markdown / Starlight",
+      "category": "Web Framework",
+      "target_dir": "src/content/docs/vi/",
+      "status": "Chương trình i18n chào đón Vi",
+      "merge_speed": "🔥 Cực nhanh (Bot check link tự động)",
+      "description": "Framework web hot nhất hiện nay cho content-driven websites. Astro có quy trình i18n chuẩn hóa với nhãn i18n trên repo.",
+      "coordination_url": "https://github.com/withastro/docs/labels/i18n",
+      "guide_url": "https://github.com/withastro/docs/blob/main/TRANSLATING.md",
+      "sample_files": [
+        "src/content/docs/vi/getting-started.mdx",
+        "src/content/docs/vi/concepts/"
+      ],
+      "tags": [
+        "Astro",
+        "Modern Web",
+        "i18n Active"
+      ]
+    },
+    {
+      "id": "huggingface-course",
+      "name": "Hugging Face Course",
+      "repo_name": "huggingface/course",
+      "repo_url": "https://github.com/huggingface/course",
+      "stars": 16000,
+      "language": "Markdown / Python",
+      "category": "AI / Machine Learning",
+      "target_dir": "chapters/vi/",
+      "status": "Đang mở đợt dịch AI",
+      "merge_speed": "✅ Dễ (Team AI VN review)",
+      "description": "Khóa học chính thức về LLM và Transformers của Hugging Face. Có sẵn nhánh tiếng Việt `chapters/vi`, đóng góp PR ở đây rất giá trị cho profile AI.",
+      "coordination_url": "https://github.com/huggingface/course/tree/main/chapters/vi",
+      "guide_url": "https://github.com/huggingface/course/blob/main/CONTRIBUTING.md",
+      "sample_files": [
+        "chapters/en/chapter1/",
+        "chapters/en/chapter2/"
+      ],
+      "tags": [
+        "AI",
+        "HuggingFace",
+        "Transformers",
+        "High Value"
+      ]
     }
   ]
 }

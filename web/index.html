@@ -50,7 +50,7 @@
         <span id="last-updated" class="text-xs text-slate-400 bg-slate-800/80 px-2.5 py-1 rounded-full border border-slate-700">
           <i class="fa-regular fa-clock mr-1"></i> Đang tải...
         </span>
-        <a href="https://github.com" id="repo-link" target="_blank" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-700 transition flex items-center gap-1.5">
+        <a href="https://github.com/Huyvux12/Hunt_PR" id="repo-link" target="_blank" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-700 transition flex items-center gap-1.5">
           <i class="fa-brands fa-github text-sm"></i> GitHub
         </a>
       </div>
@@ -58,75 +58,150 @@
   </header>
 
   <!-- Main Container -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
 
     <!-- KPI Stats Cards -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm">
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5 shadow-sm">
         <p class="text-xs font-medium text-slate-400">🌟 Top Hôm Nay</p>
-        <p id="stat-top-count" class="text-2xl font-bold text-emerald-400 mt-1">10</p>
+        <p id="stat-top-count" class="text-xl font-bold text-emerald-400 mt-1">10</p>
         <p class="text-[11px] text-slate-500 mt-0.5">Khuyên dùng cho Agent</p>
       </div>
 
-      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm">
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5 shadow-sm">
         <p class="text-xs font-medium text-slate-400">⚡ Merge Siêu Tốc (&le;24h)</p>
-        <p id="stat-fast-count" class="text-2xl font-bold text-amber-400 mt-1">0</p>
-        <p class="text-[11px] text-slate-500 mt-0.5">Tỷ lệ được duyệt trong ngày</p>
+        <p id="stat-fast-count" class="text-xl font-bold text-amber-400 mt-1">0</p>
+        <p class="text-[11px] text-slate-500 mt-0.5">Duyệt ngay trong ngày</p>
       </div>
 
-      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm">
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5 shadow-sm">
+        <p class="text-xs font-medium text-slate-400">🇻🇳 Dự Án Dịch Docs (Vi)</p>
+        <p id="stat-trans-count" class="text-xl font-bold text-rose-400 mt-1">10</p>
+        <p class="text-[11px] text-slate-500 mt-0.5">500 &rarr; 400k ⭐ mở cửa</p>
+      </div>
+
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5 shadow-sm">
         <p class="text-xs font-medium text-slate-400">📦 Tổng Issues Trong DB</p>
-        <p id="stat-total-issues" class="text-2xl font-bold text-blue-400 mt-1">0</p>
+        <p id="stat-total-issues" class="text-xl font-bold text-blue-400 mt-1">0</p>
         <p class="text-[11px] text-slate-500 mt-0.5">Đã lọc và lưu trữ</p>
       </div>
 
-      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm">
-        <p class="text-xs font-medium text-slate-400">🏢 Tổng Repos Uy Tín</p>
-        <p id="stat-total-repos" class="text-2xl font-bold text-purple-400 mt-1">0</p>
-        <p class="text-[11px] text-slate-500 mt-0.5">&ge; 100 Stars, Active 30 ngày</p>
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5 shadow-sm">
+        <p class="text-xs font-medium text-slate-400">🏢 Repos Uy Tín</p>
+        <p id="stat-total-repos" class="text-xl font-bold text-purple-400 mt-1">0</p>
+        <p class="text-[11px] text-slate-500 mt-0.5">&ge; 100 Stars, Active</p>
       </div>
     </div>
 
-    <!-- Filter & Search Toolbar -->
-    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4">
-      <div class="flex flex-col md:flex-row items-center justify-between gap-3">
-        <!-- Filter Tabs -->
-        <div class="flex flex-wrap items-center gap-1.5 w-full md:w-auto" id="filter-tabs">
-          <button data-filter="top10" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium transition bg-emerald-600 text-white shadow-sm">
-            🌟 Top 10 Hôm Nay
+    <!-- MAIN VIEW MODE SWITCHER (TABS) -->
+    <div class="flex items-center justify-center p-1.5 bg-slate-900 border border-slate-800 rounded-xl max-w-xl mx-auto shadow-sm">
+      <button id="view-mode-issues" class="flex-1 py-2 px-4 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-2 bg-emerald-600 text-white shadow">
+        <i class="fa-solid fa-bug"></i> Săn Bug & Code Issues
+      </button>
+      <button id="view-mode-translations" class="flex-1 py-2 px-4 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-2 text-slate-300 hover:text-white">
+        <i class="fa-solid fa-language text-rose-400"></i> Dịch Thuật Docs Tiếng Việt
+        <span class="bg-rose-500/20 text-rose-300 text-[10px] px-2 py-0.5 rounded-full border border-rose-500/30">Hot</span>
+      </button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SECTION 1: CODE ISSUES SECTION             -->
+    <!-- ========================================== -->
+    <div id="section-issues" class="space-y-4">
+      <!-- Filter & Search Toolbar -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-3">
+          <!-- Filter Tabs -->
+          <div class="flex flex-wrap items-center gap-1.5 w-full md:w-auto" id="filter-tabs">
+            <button data-filter="top10" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium transition bg-emerald-600 text-white shadow-sm">
+              🌟 Top 10 Hôm Nay
+            </button>
+            <button data-filter="fast" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium transition bg-slate-800 text-slate-300 hover:bg-slate-700">
+              🔥 Merge Nhanh (&le;24h)
+            </button>
+            <button data-filter="docs" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium transition bg-slate-800 text-slate-300 hover:bg-slate-700">
+              📚 Docs & Typos
+            </button>
+            <button data-filter="code" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium transition bg-slate-800 text-slate-300 hover:bg-slate-700">
+              💻 Có Code/Traceback
+            </button>
+            <button data-filter="all" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium transition bg-slate-800 text-slate-300 hover:bg-slate-700">
+              Tất cả
+            </button>
+          </div>
+
+          <!-- Search Bar -->
+          <div class="relative w-full md:w-72">
+            <i class="fa-solid fa-search absolute left-3 top-2.5 text-xs text-slate-500"></i>
+            <input 
+              type="text" 
+              id="search-input" 
+              placeholder="Tìm repo, issue, nhãn..."
+              class="w-full bg-slate-950 border border-slate-800 rounded-lg pl-8 pr-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition"
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Issue Cards Grid -->
+      <div id="issue-container" class="space-y-3">
+        <div class="text-center py-12 text-slate-500 text-sm">
+          <i class="fa-solid fa-spinner fa-spin text-xl mb-2"></i>
+          <p>Đang tải danh sách issue từ data.json...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SECTION 2: VIETNAMESE DOCS TRANSLATION     -->
+    <!-- ========================================== -->
+    <div id="section-translations" class="space-y-4 hidden">
+      <!-- Banner giới thiệu -->
+      <div class="bg-gradient-to-r from-rose-950/40 to-slate-900 border border-rose-900/30 rounded-xl p-5 shadow-sm space-y-2">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🇻🇳</span>
+          <h2 class="text-base font-bold text-rose-300">Kho Dự Án Mã Nguồn Mở Lớn Chào Đón PR Dịch Tài Liệu Sang Tiếng Việt</h2>
+        </div>
+        <p class="text-xs text-slate-300 leading-relaxed">
+          Các dự án "khủng" (từ <strong>500 ⭐ đến hơn 400.000 ⭐</strong> như <em>React, FastAPI, freeCodeCamp, Kubernetes, Developer Roadmap, Python Docs</em>) luôn có nhu cầu bản địa hóa tài liệu sang Tiếng Việt. 
+          PR dịch thuật có <strong>tỷ lệ merge 98%</strong>, không đụng chạm logic code, cực kỳ an toàn để farm mốc 100 PRs!
+        </p>
+      </div>
+
+      <!-- Filter Tags for Translations -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex flex-wrap items-center gap-1.5" id="trans-category-tabs">
+          <button data-cat="all" class="trans-cat-btn px-3 py-1.5 rounded-lg text-xs font-medium transition bg-rose-600 text-white shadow-sm">
+            Tất cả dự án (10)
           </button>
-          <button data-filter="fast" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium transition bg-slate-800 text-slate-300 hover:bg-slate-700">
-            🔥 Merge Nhanh (&le;24h)
+          <button data-cat="Frontend" class="trans-cat-btn px-3 py-1.5 rounded-lg text-xs font-medium transition bg-slate-800 text-slate-300 hover:bg-slate-700">
+            Frontend (React, Vue, Vite, Astro)
           </button>
-          <button data-filter="docs" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium transition bg-slate-800 text-slate-300 hover:bg-slate-700">
-            📚 Docs & Typos
+          <button data-cat="Backend Framework" class="trans-cat-btn px-3 py-1.5 rounded-lg text-xs font-medium transition bg-slate-800 text-slate-300 hover:bg-slate-700">
+            Backend (FastAPI, Python)
           </button>
-          <button data-filter="code" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium transition bg-slate-800 text-slate-300 hover:bg-slate-700">
-            💻 Có Code/Traceback
+          <button data-cat="Cloud & DevOps" class="trans-cat-btn px-3 py-1.5 rounded-lg text-xs font-medium transition bg-slate-800 text-slate-300 hover:bg-slate-700">
+            Cloud & DevOps (Kubernetes)
           </button>
-          <button data-filter="all" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium transition bg-slate-800 text-slate-300 hover:bg-slate-700">
-            Tất cả
+          <button data-cat="AI / Machine Learning" class="trans-cat-btn px-3 py-1.5 rounded-lg text-xs font-medium transition bg-slate-800 text-slate-300 hover:bg-slate-700">
+            AI / LLM (Hugging Face)
           </button>
         </div>
 
-        <!-- Search Bar -->
-        <div class="relative w-full md:w-72">
+        <div class="relative w-full md:w-64">
           <i class="fa-solid fa-search absolute left-3 top-2.5 text-xs text-slate-500"></i>
           <input 
             type="text" 
-            id="search-input" 
-            placeholder="Tìm theo repo, tiêu đề, label..."
-            class="w-full bg-slate-950 border border-slate-800 rounded-lg pl-8 pr-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition"
+            id="trans-search-input" 
+            placeholder="Tìm tên dự án, ngôn ngữ..."
+            class="w-full bg-slate-950 border border-slate-800 rounded-lg pl-8 pr-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-rose-500 transition"
           >
         </div>
       </div>
-    </div>
 
-    <!-- Issue Cards Grid -->
-    <div id="issue-container" class="space-y-3">
-      <div class="text-center py-12 text-slate-500 text-sm">
-        <i class="fa-solid fa-spinner fa-spin text-xl mb-2"></i>
-        <p>Đang tải danh sách issue từ data.json...</p>
+      <!-- Translation Projects Grid -->
+      <div id="translation-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Will be dynamically populated -->
       </div>
     </div>
 
@@ -135,12 +210,13 @@
   <!-- Toast Notification -->
   <div id="toast" class="fixed bottom-5 right-5 bg-emerald-500 text-slate-950 px-4 py-2.5 rounded-lg font-medium text-xs shadow-lg transform translate-y-20 opacity-0 transition duration-300 flex items-center gap-2 z-50">
     <i class="fa-solid fa-circle-check"></i>
-    <span id="toast-msg">Đã copy prompt cho Claude Code!</span>
+    <span id="toast-msg">Đã copy prompt cho AI Agent!</span>
   </div>
 
   <script>
-    let appData = { issues: [], top_10: [], stats: {} };
+    let appData = { issues: [], top_10: [], stats: {}, translation_projects: [] };
     let currentFilter = 'top10';
+    let currentTransCategory = 'all';
 
     async function loadData() {
       try {
@@ -153,17 +229,18 @@
         document.getElementById('issue-container').innerHTML = `
           <div class="text-center py-12 bg-slate-900 border border-slate-800 rounded-xl p-8">
             <p class="text-amber-400 font-medium mb-1"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Chưa có dữ liệu</p>
-            <p class="text-xs text-slate-400">Hãy chạy script <code>uv run main.py</code> để thu thập danh sách issue đầu tiên.</p>
+            <p class="text-xs text-slate-400">Hãy chạy script <code>uv run main.py</code> để cập nhật dữ liệu.</p>
           </div>
         `;
       }
     }
 
     function renderDashboard() {
-      // 1. Render Stats
+      // 1. Stats Counter
       const stats = appData.stats || {};
       document.getElementById('stat-top-count').textContent = appData.top_10 ? appData.top_10.length : 0;
       document.getElementById('stat-fast-count').textContent = stats.fast_merge_count || 0;
+      document.getElementById('stat-trans-count').textContent = appData.translation_projects ? appData.translation_projects.length : 0;
       document.getElementById('stat-total-issues').textContent = stats.total_issues || 0;
       document.getElementById('stat-total-repos').textContent = stats.total_repos || 0;
 
@@ -172,14 +249,17 @@
         document.getElementById('last-updated').innerHTML = `<i class="fa-regular fa-clock mr-1"></i> ${d.toLocaleTimeString()} ${d.toLocaleDateString()}`;
       }
 
-      renderList();
+      renderIssuesList();
+      renderTranslationsList();
     }
 
-    function renderList() {
+    // ==========================================
+    // RENDER CODE ISSUES LIST
+    // ==========================================
+    function renderIssuesList() {
       const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
       let list = currentFilter === 'top10' ? (appData.top_10 || []) : (appData.issues || []);
 
-      // Filter theo tab
       if (currentFilter === 'fast') {
         list = appData.issues.filter(i => i.merge_velocity_hours > 0 && i.merge_velocity_hours <= 24);
       } else if (currentFilter === 'docs') {
@@ -191,7 +271,6 @@
         list = appData.issues.filter(i => i.has_code_block);
       }
 
-      // Search filter
       if (searchVal) {
         list = list.filter(i => 
           i.title.toLowerCase().includes(searchVal) ||
@@ -220,7 +299,6 @@
 
         return `
           <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition shadow-sm space-y-3">
-            <!-- Header: Repo & Score -->
             <div class="flex flex-wrap items-center justify-between gap-2">
               <div class="flex items-center space-x-2">
                 <span class="text-xs font-semibold text-emerald-400">#${idx + 1}</span>
@@ -242,14 +320,12 @@
               </div>
             </div>
 
-            <!-- Issue Title -->
             <h2 class="text-sm font-semibold text-slate-100 hover:text-emerald-400 transition leading-snug">
               <a href="${item.html_url}" target="_blank">
                 #${item.issue_number}: ${escapeHtml(item.title)}
               </a>
             </h2>
 
-            <!-- Metrics & Badges -->
             <div class="flex flex-wrap items-center gap-2 pt-1 border-t border-slate-800/80">
               <span class="text-xs text-emerald-400 font-medium">
                 ${item.merge_verdict}
@@ -261,7 +337,6 @@
               ${labelsHtml}
             </div>
 
-            <!-- Action Buttons for Boris Cherny Workflow -->
             <div class="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-slate-800/60">
               <div class="flex items-center gap-2">
                 <button onclick="copyAgentPrompt(${item.id})" class="text-xs bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-semibold px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow-sm">
@@ -281,6 +356,113 @@
       }).join('');
     }
 
+    // ==========================================
+    // RENDER VIETNAMESE TRANSLATION PROJECTS
+    // ==========================================
+    function renderTranslationsList() {
+      const searchVal = document.getElementById('trans-search-input').value.toLowerCase().trim();
+      let list = appData.translation_projects || [];
+
+      if (currentTransCategory !== 'all') {
+        list = list.filter(p => p.category.toLowerCase().includes(currentTransCategory.toLowerCase()));
+      }
+
+      if (searchVal) {
+        list = list.filter(p => 
+          p.name.toLowerCase().includes(searchVal) ||
+          p.repo_name.toLowerCase().includes(searchVal) ||
+          p.language.toLowerCase().includes(searchVal) ||
+          (p.tags || []).some(t => t.toLowerCase().includes(searchVal))
+        );
+      }
+
+      const container = document.getElementById('translation-container');
+      if (list.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-2 text-center py-12 text-slate-500 text-sm bg-slate-900 border border-slate-800 rounded-xl">
+            Không tìm thấy dự án dịch thuật nào phù hợp với bộ lọc.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = list.map((proj, idx) => {
+        const tagsHtml = (proj.tags || []).map(t => 
+          `<span class="text-[11px] bg-slate-800/80 text-rose-300 px-2 py-0.5 rounded border border-rose-900/40">${escapeHtml(t)}</span>`
+        ).join('');
+
+        return `
+          <div class="bg-slate-900 border border-slate-800 hover:border-rose-900/50 rounded-xl p-5 shadow-sm space-y-3.5 transition flex flex-col justify-between">
+            <!-- Header -->
+            <div class="space-y-2">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <h3 class="text-sm font-bold text-slate-100 flex items-center gap-1.5">
+                    <span>${proj.name}</span>
+                  </h3>
+                  <a href="${proj.repo_url}" target="_blank" class="text-xs font-mono text-slate-400 hover:text-rose-400 transition">
+                    <i class="fa-brands fa-github mr-1"></i>${proj.repo_name}
+                  </a>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span class="text-xs bg-amber-500/10 text-amber-300 border border-amber-500/30 px-2.5 py-0.5 rounded-full font-semibold">
+                    ⭐ ${(proj.stars || 0).toLocaleString()}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Badges -->
+              <div class="flex flex-wrap items-center gap-1.5 pt-1">
+                <span class="text-[11px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700">
+                  <i class="fa-solid fa-layer-group text-slate-400 mr-1"></i>${proj.category}
+                </span>
+                <span class="text-[11px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/30">
+                  ${proj.merge_speed}
+                </span>
+                <span class="text-[11px] bg-rose-500/10 text-rose-300 px-2 py-0.5 rounded border border-rose-500/30">
+                  📂 Đích: ${proj.target_dir}
+                </span>
+              </div>
+
+              <!-- Description -->
+              <p class="text-xs text-slate-300 leading-relaxed pt-1">
+                ${escapeHtml(proj.description)}
+              </p>
+
+              <!-- Tags -->
+              <div class="flex flex-wrap gap-1 pt-1">
+                ${tagsHtml}
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="pt-3 border-t border-slate-800/80 space-y-2">
+              <div class="grid grid-cols-2 gap-2">
+                <button onclick="copyTranslationPrompt('${proj.id}')" class="text-xs bg-rose-600 hover:bg-rose-500 text-white font-semibold py-1.5 px-3 rounded-lg transition flex items-center justify-center gap-1.5 shadow-sm">
+                  <i class="fa-solid fa-robot"></i> Copy Prompt Dịch AI
+                </button>
+                <button onclick="copyCloneCommand('${proj.repo_url}', 0)" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 py-1.5 px-3 rounded-lg border border-slate-700 transition flex items-center justify-center gap-1.5">
+                  <i class="fa-solid fa-terminal text-slate-400"></i> Copy Git Clone
+                </button>
+              </div>
+
+              <div class="flex items-center justify-between text-xs pt-1 text-slate-400">
+                <a href="${proj.coordination_url}" target="_blank" class="hover:text-rose-400 transition flex items-center gap-1">
+                  <i class="fa-regular fa-comments"></i> Thảo luận / Roadmap <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                </a>
+                <a href="${proj.guide_url}" target="_blank" class="hover:text-rose-400 transition flex items-center gap-1">
+                  <i class="fa-solid fa-book-open"></i> Quy định dịch <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ==========================================
+    // COPY PROMPTS
+    // ==========================================
     function copyAgentPrompt(issueId) {
       const all = [...(appData.top_10 || []), ...(appData.issues || [])];
       const item = all.find(i => i.id === issueId);
@@ -309,9 +491,43 @@ ${item.body || 'Không có mô tả chi tiết, hãy đọc tiêu đề và tìm
       });
     }
 
+    function copyTranslationPrompt(projId) {
+      const proj = (appData.translation_projects || []).find(p => p.id === projId);
+      if (!proj) return;
+
+      const promptText = `Bạn là Senior Technical Writer và Chuyên gia dịch thuật tài liệu công nghệ sang Tiếng Việt.
+Nhiệm vụ của bạn là dịch một file tài liệu kỹ thuật Markdown từ tiếng Anh sang Tiếng Việt chuẩn xác cho dự án:
+
+Dự án: ${proj.name} (${proj.repo_url})
+Thư mục lưu trữ file dịch: ${proj.target_dir}
+
+=== NGUYÊN TẮC DỊCH THUẬT KỸ THUẬT CHUẨN MÃ NGUỒN MỞ ===
+1. GIỮ NGUYÊN 100% CODE VÀ CẤU TRÚC:
+   - Toàn bộ khối mã (code blocks: \`\`\`python, \`\`\`javascript...), inline code (\`variable\`, \`function()\`), URLs, đường dẫn file, frontmatter metadata (tiêu đề, id).
+2. THUẬT NGỮ CHUYÊN NGÀNH:
+   - Giữ nguyên các từ kỹ thuật phổ biến quốc tế (ví dụ: framework, middleware, frontend, backend, route, request, response, repository, payload, dependency injection, async/await, component, prop, state, hook).
+   - Dịch các khái niệm có nghĩa tiếng Việt rõ ràng (ví dụ: authentication -> xác thực, authorization -> phân quyền, inheritance -> kế thừa, validation -> kiểm tra hợp lệ).
+3. VĂN PHONG TỰ NHIÊN, DỄ HIỂU:
+   - Dùng đại từ xưng hô thân thiện: xưng "chúng ta" (we) và gọi người đọc là "bạn" (you).
+   - Diễn đạt trôi chảy, không dịch word-by-word kiểu Google Dịch cũ.
+4. QUY TRÌNH HOÀN THÀNH:
+   - Tạo file mới tại thư mục: ${proj.target_dir}
+   - Đảm bảo kiểm tra lỗi chính tả tiếng Việt trước khi lưu.
+   - Commit message: docs(vi): translate [tên_file] into Vietnamese`;
+
+      navigator.clipboard.writeText(promptText).then(() => {
+        showToast("Đã copy Prompt Dịch thuật Tiếng Việt cho AI!");
+      });
+    }
+
     function copyCloneCommand(repoUrl, issueNumber) {
-      const folder = repoUrl.split('/').pop();
-      const cmd = `git clone ${repoUrl}.git && cd ${folder} && git checkout -b fix-issue-${issueNumber}`;
+      const folder = repoUrl.split('/').pop().replace('.git', '');
+      let cmd = "";
+      if (issueNumber > 0) {
+        cmd = `git clone ${repoUrl}.git && cd ${folder} && git checkout -b fix-issue-${issueNumber}`;
+      } else {
+        cmd = `git clone ${repoUrl}.git && cd ${folder} && git checkout -b docs-vi-translation`;
+      }
       navigator.clipboard.writeText(cmd).then(() => {
         showToast("Đã copy lệnh Git Clone & Checkout branch!");
       });
@@ -335,9 +551,35 @@ ${item.body || 'Không có mô tả chi tiết, hãy đọc tiêu đề và tìm
         .replace(/"/g, '&quot;');
     }
 
-    // Event Listeners cho filter tabs
+    // ==========================================
+    // SWITCH VIEW MODES
+    // ==========================================
+    const btnIssues = document.getElementById('view-mode-issues');
+    const btnTrans = document.getElementById('view-mode-translations');
+    const secIssues = document.getElementById('section-issues');
+    const secTrans = document.getElementById('section-translations');
+
+    btnIssues.addEventListener('click', () => {
+      btnIssues.classList.add('bg-emerald-600', 'text-white', 'shadow');
+      btnIssues.classList.remove('text-slate-300');
+      btnTrans.classList.remove('bg-rose-600', 'text-white', 'shadow');
+      btnTrans.classList.add('text-slate-300');
+      secIssues.classList.remove('hidden');
+      secTrans.classList.add('hidden');
+    });
+
+    btnTrans.addEventListener('click', () => {
+      btnTrans.classList.add('bg-rose-600', 'text-white', 'shadow');
+      btnTrans.classList.remove('text-slate-300');
+      btnIssues.classList.remove('bg-emerald-600', 'text-white', 'shadow');
+      btnIssues.classList.add('text-slate-300');
+      secTrans.classList.remove('hidden');
+      secIssues.classList.add('hidden');
+    });
+
+    // Event Listeners cho filter tabs của Issues
     document.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
+      btn.addEventListener('click', () => {
         document.querySelectorAll('.filter-btn').forEach(b => {
           b.classList.remove('bg-emerald-600', 'text-white');
           b.classList.add('bg-slate-800', 'text-slate-300');
@@ -345,12 +587,30 @@ ${item.body || 'Không có mô tả chi tiết, hãy đọc tiêu đề và tìm
         btn.classList.remove('bg-slate-800', 'text-slate-300');
         btn.classList.add('bg-emerald-600', 'text-white');
         currentFilter = btn.dataset.filter;
-        renderList();
+        renderIssuesList();
+      });
+    });
+
+    // Event Listeners cho category tabs của Translations
+    document.querySelectorAll('.trans-cat-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.trans-cat-btn').forEach(b => {
+          b.classList.remove('bg-rose-600', 'text-white');
+          b.classList.add('bg-slate-800', 'text-slate-300');
+        });
+        btn.classList.remove('bg-slate-800', 'text-slate-300');
+        btn.classList.add('bg-rose-600', 'text-white');
+        currentTransCategory = btn.dataset.cat;
+        renderTranslationsList();
       });
     });
 
     document.getElementById('search-input').addEventListener('input', () => {
-      renderList();
+      renderIssuesList();
+    });
+
+    document.getElementById('trans-search-input').addEventListener('input', () => {
+      renderTranslationsList();
     });
 
     loadData();
