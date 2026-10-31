@@ -1,0 +1,70 @@
+name: Auto Crawl & Deploy to GitHub Pages
+
+on:
+  schedule:
+    # Chạy tự động mỗi 1 tiếng (vào phút 0)
+    - cron: '0 * * * *'
+  workflow_dispatch: # Cho phép bấm nút "Run workflow" thủ công trên GitHub Actions
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'web/**'
+      - 'src/**'
+      - 'main.py'
+
+# Cấp quyền ghi repo (commit DB) và triển khai GitHub Pages
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages-and-crawl"
+  cancel-in-progress: false
+
+jobs:
+  crawl-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🐍 Cài đặt Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 🚀 Chạy Hunt-PR Crawler & Cập nhật SQLite DB
+        env:
+          # Ưu tiên dùng PAT nếu user có tạo secret CUSTOM_PAT (để có 5000 requests/h), nếu không fallback về GITHUB_TOKEN
+          GITHUB_TOKEN: ${{ secrets.CUSTOM_PAT || secrets.GITHUB_TOKEN }}
+          MIN_STARS: 100
+        run: |
+          python main.py
+
+      - name: 💾 Lưu Database & Web Data vào Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/issues.db web/data.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: auto-update crawled issues and web data [skip ci]" && git push)
+
+      - name: 🌐 Cấu hình GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: 📦 Đóng gói thư mục web
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'web'
+
+      - name: 🚀 Triển khai lên GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

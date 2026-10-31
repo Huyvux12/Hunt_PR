@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hunt-PR Dashboard | 100 PRs Agent Pipeline</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased">
+
+  <!-- Top Navbar -->
+  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <span class="text-2xl">🎯</span>
+        <div>
+          <h1 class="text-lg font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+            Hunt-PR Dashboard
+          </h1>
+          <p class="text-xs text-slate-400">100 PRs Workflow for AI Coding Agents</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-3">
+        <span id="last-updated" class="text-xs text-slate-400 bg-slate-800/80 px-2.5 py-1 rounded-full border border-slate-700">
+          <i class="fa-regular fa-clock mr-1"></i> Đang tải...
+        </span>
+        <a href="https://github.com" id="repo-link" target="_blank" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-700 transition flex items-center gap-1.5">
+          <i class="fa-brands fa-github text-sm"></i> GitHub
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+
+    <!-- KPI Stats Cards -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm">
+        <p class="text-xs font-medium text-slate-400">🌟 Top Hôm Nay</p>
+        <p id="stat-top-count" class="text-2xl font-bold text-emerald-400 mt-1">10</p>
+        <p class="text-[11px] text-slate-500 mt-0.5">Khuyên dùng cho Agent</p>
+      </div>
+
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm">
+        <p class="text-xs font-medium text-slate-400">⚡ Merge Siêu Tốc (&le;24h)</p>
+        <p id="stat-fast-count" class="text-2xl font-bold text-amber-400 mt-1">0</p>
+        <p class="text-[11px] text-slate-500 mt-0.5">Tỷ lệ được duyệt trong ngày</p>
+      </div>
+
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm">
+        <p class="text-xs font-medium text-slate-400">📦 Tổng Issues Trong DB</p>
+        <p id="stat-total-issues" class="text-2xl font-bold text-blue-400 mt-1">0</p>
+        <p class="text-[11px] text-slate-500 mt-0.5">Đã lọc và lưu trữ</p>
+      </div>
+
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm">
+        <p class="text-xs font-medium text-slate-400">🏢 Tổng Repos Uy Tín</p>
+        <p id="stat-total-repos" class="text-2xl font-bold text-purple-400 mt-1">0</p>
+        <p class="text-[11px] text-slate-500 mt-0.5">&ge; 100 Stars, Active 30 ngày</p>
+      </div>
+    </div>
+
+    <!-- Filter & Search Toolbar -->
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-3">
+        <!-- Filter Tabs -->
+        <div class="flex flex-wrap items-center gap-1.5 w-full md:w-auto" id="filter-tabs">
+          <button data-filter="top10" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium transition bg-emerald-600 text-white shadow-sm">
+            🌟 Top 10 Hôm Nay
+          </button>
+          <button data-filter="fast" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium transition bg-slate-800 text-slate-300 hover:bg-slate-700">
+            🔥 Merge Nhanh (&le;24h)
+          </button>
+          <button data-filter="docs" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium transition bg-slate-800 text-slate-300 hover:bg-slate-700">
+            📚 Docs & Typos
+          </button>
+          <button data-filter="code" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium transition bg-slate-800 text-slate-300 hover:bg-slate-700">
+            💻 Có Code/Traceback
+          </button>
+          <button data-filter="all" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium transition bg-slate-800 text-slate-300 hover:bg-slate-700">
+            Tất cả
+          </button>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="relative w-full md:w-72">
+          <i class="fa-solid fa-search absolute left-3 top-2.5 text-xs text-slate-500"></i>
+          <input 
+            type="text" 
+            id="search-input" 
+            placeholder="Tìm theo repo, tiêu đề, label..."
+            class="w-full bg-slate-950 border border-slate-800 rounded-lg pl-8 pr-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition"
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Issue Cards Grid -->
+    <div id="issue-container" class="space-y-3">
+      <div class="text-center py-12 text-slate-500 text-sm">
+        <i class="fa-solid fa-spinner fa-spin text-xl mb-2"></i>
+        <p>Đang tải danh sách issue từ data.json...</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-5 right-5 bg-emerald-500 text-slate-950 px-4 py-2.5 rounded-lg font-medium text-xs shadow-lg transform translate-y-20 opacity-0 transition duration-300 flex items-center gap-2 z-50">
+    <i class="fa-solid fa-circle-check"></i>
+    <span id="toast-msg">Đã copy prompt cho Claude Code!</span>
+  </div>
+
+  <script>
+    let appData = { issues: [], top_10: [], stats: {} };
+    let currentFilter = 'top10';
+
+    async function loadData() {
+      try {
+        const res = await fetch('./data.json?t=' + Date.now());
+        if (!res.ok) throw new Error("Chưa tìm thấy data.json");
+        appData = await res.json();
+        renderDashboard();
+      } catch (err) {
+        console.error(err);
+        document.getElementById('issue-container').innerHTML = `
+          <div class="text-center py-12 bg-slate-900 border border-slate-800 rounded-xl p-8">
+            <p class="text-amber-400 font-medium mb-1"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Chưa có dữ liệu</p>
+            <p class="text-xs text-slate-400">Hãy chạy script <code>uv run main.py</code> để thu thập danh sách issue đầu tiên.</p>
+          </div>
+        `;
+      }
+    }
+
+    function renderDashboard() {
+      // 1. Render Stats
+      const stats = appData.stats || {};
+      document.getElementById('stat-top-count').textContent = appData.top_10 ? appData.top_10.length : 0;
+      document.getElementById('stat-fast-count').textContent = stats.fast_merge_count || 0;
+      document.getElementById('stat-total-issues').textContent = stats.total_issues || 0;
+      document.getElementById('stat-total-repos').textContent = stats.total_repos || 0;
+
+      if (appData.generated_at) {
+        const d = new Date(appData.generated_at);
+        document.getElementById('last-updated').innerHTML = `<i class="fa-regular fa-clock mr-1"></i> ${d.toLocaleTimeString()} ${d.toLocaleDateString()}`;
+      }
+
+      renderList();
+    }
+
+    function renderList() {
+      const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
+      let list = currentFilter === 'top10' ? (appData.top_10 || []) : (appData.issues || []);
+
+      // Filter theo tab
+      if (currentFilter === 'fast') {
+        list = appData.issues.filter(i => i.merge_velocity_hours > 0 && i.merge_velocity_hours <= 24);
+      } else if (currentFilter === 'docs') {
+        list = appData.issues.filter(i => {
+          const lbls = (i.labels || []).join(' ').toLowerCase();
+          return lbls.includes('doc') || lbls.includes('typo');
+        });
+      } else if (currentFilter === 'code') {
+        list = appData.issues.filter(i => i.has_code_block);
+      }
+
+      // Search filter
+      if (searchVal) {
+        list = list.filter(i => 
+          i.title.toLowerCase().includes(searchVal) ||
+          i.repo_name.toLowerCase().includes(searchVal) ||
+          (i.labels || []).some(l => l.toLowerCase().includes(searchVal))
+        );
+      }
+
+      const container = document.getElementById('issue-container');
+      if (list.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 text-slate-500 text-sm bg-slate-900 border border-slate-800 rounded-xl">
+            Không tìm thấy Issue nào phù hợp với bộ lọc hiện tại.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = list.map((item, idx) => {
+        const scoreBadgeColor = item.agent_score >= 80 ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' :
+                               (item.agent_score >= 60 ? 'bg-blue-500/10 text-blue-400 border-blue-500/30' : 'bg-slate-700/50 text-slate-300 border-slate-600');
+
+        const labelsHtml = (item.labels || []).slice(0, 4).map(l => 
+          `<span class="text-[11px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700">${escapeHtml(l)}</span>`
+        ).join('');
+
+        return `
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition shadow-sm space-y-3">
+            <!-- Header: Repo & Score -->
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex items-center space-x-2">
+                <span class="text-xs font-semibold text-emerald-400">#${idx + 1}</span>
+                <a href="${item.repo_url}" target="_blank" class="text-xs font-mono font-semibold text-slate-200 hover:text-emerald-400 transition">
+                  <i class="fa-brands fa-github text-slate-400 mr-1"></i>${item.repo_name}
+                </a>
+                <span class="text-[11px] bg-slate-800 text-amber-300 px-2 py-0.5 rounded-full border border-slate-700">
+                  ⭐ ${(item.repo_stars || 0).toLocaleString()}
+                </span>
+                <span class="text-[11px] bg-slate-800 text-cyan-300 px-2 py-0.5 rounded-full border border-slate-700">
+                  ${item.language || 'Python'}
+                </span>
+              </div>
+
+              <div class="flex items-center space-x-2">
+                <span class="text-[11px] px-2.5 py-0.5 rounded-full border font-semibold ${scoreBadgeColor}">
+                  🎯 AI Score: ${item.agent_score}/100
+                </span>
+              </div>
+            </div>
+
+            <!-- Issue Title -->
+            <h2 class="text-sm font-semibold text-slate-100 hover:text-emerald-400 transition leading-snug">
+              <a href="${item.html_url}" target="_blank">
+                #${item.issue_number}: ${escapeHtml(item.title)}
+              </a>
+            </h2>
+
+            <!-- Metrics & Badges -->
+            <div class="flex flex-wrap items-center gap-2 pt-1 border-t border-slate-800/80">
+              <span class="text-xs text-emerald-400 font-medium">
+                ${item.merge_verdict}
+              </span>
+              <span class="text-xs text-slate-400">
+                <i class="fa-regular fa-comment mr-1"></i>${item.comments_count} bình luận
+              </span>
+              ${item.has_code_block ? `<span class="text-[11px] bg-purple-500/10 text-purple-300 border border-purple-500/30 px-2 py-0.5 rounded"><i class="fa-solid fa-code mr-1"></i>Có Code</span>` : ''}
+              ${labelsHtml}
+            </div>
+
+            <!-- Action Buttons for Boris Cherny Workflow -->
+            <div class="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-slate-800/60">
+              <div class="flex items-center gap-2">
+                <button onclick="copyAgentPrompt(${item.id})" class="text-xs bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-semibold px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow-sm">
+                  <i class="fa-solid fa-robot"></i> Copy Prompt Claude Code
+                </button>
+                <button onclick="copyCloneCommand('${item.repo_url}', ${item.issue_number})" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-700 transition flex items-center gap-1.5">
+                  <i class="fa-solid fa-terminal text-slate-400"></i> Copy Git Worktree
+                </button>
+              </div>
+
+              <a href="${item.html_url}" target="_blank" class="text-xs text-slate-400 hover:text-slate-200 transition flex items-center gap-1">
+                Xem trên GitHub <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+              </a>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function copyAgentPrompt(issueId) {
+      const all = [...(appData.top_10 || []), ...(appData.issues || [])];
+      const item = all.find(i => i.id === issueId);
+      if (!item) return;
+
+      const promptText = `Bạn là Senior Software Engineer. Hãy clone repo và giải quyết issue sau đây:
+
+Repository: ${item.repo_url}
+Issue #${item.issue_number}: ${item.title}
+Link: ${item.html_url}
+
+=== MÔ TẢ CHI TIẾT ISSUE ===
+${item.body || 'Không có mô tả chi tiết, hãy đọc tiêu đề và tìm trong mã nguồn.'}
+
+=== YÊU CẦU THỰC HIỆN (THEO CHUẨN BORIS CHERNY 100 PRS) ===
+1. Kiểm tra cấu trúc repo, tìm file CONTRIBUTING.md và test suite hiện có.
+2. Tạo branch mới: fix-issue-${item.issue_number}
+3. Viết 1 test case tái hiện lỗi này (reproduction test).
+4. Sửa code tối giản, tuân thủ đúng coding convention của dự án.
+5. Chạy lại toàn bộ test suite để đảm bảo tất cả test đều pass.
+6. Commit với message chuẩn: fix: ${item.title.replace(/"/g, '')} (closes #${item.issue_number})
+7. Chuẩn bị sẵn lệnh push và nội dung pull request description tóm tắt ngắn gọn phần đã sửa.`;
+
+      navigator.clipboard.writeText(promptText).then(() => {
+        showToast("Đã copy Prompt chuẩn cho Claude Code / AI Agent!");
+      });
+    }
+
+    function copyCloneCommand(repoUrl, issueNumber) {
+      const folder = repoUrl.split('/').pop();
+      const cmd = `git clone ${repoUrl}.git && cd ${folder} && git checkout -b fix-issue-${issueNumber}`;
+      navigator.clipboard.writeText(cmd).then(() => {
+        showToast("Đã copy lệnh Git Clone & Checkout branch!");
+      });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-msg').textContent = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2500);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    // Event Listeners cho filter tabs
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.filter-btn').forEach(b => {
+          b.classList.remove('bg-emerald-600', 'text-white');
+          b.classList.add('bg-slate-800', 'text-slate-300');
+        });
+        btn.classList.remove('bg-slate-800', 'text-slate-300');
+        btn.classList.add('bg-emerald-600', 'text-white');
+        currentFilter = btn.dataset.filter;
+        renderList();
+      });
+    });
+
+    document.getElementById('search-input').addEventListener('input', () => {
+      renderList();
+    });
+
+    loadData();
+  </script>
+</body>
+</html>
