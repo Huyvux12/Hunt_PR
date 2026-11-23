@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-11-22T21:41:18.361019+00:00",
+  "generated_at": "2026-11-23T02:20:04.867266+00:00",
   "stats": {
-    "total_issues": 1301,
-    "active_issues": 1284,
+    "total_issues": 1307,
+    "active_issues": 1290,
     "closed_issues": 17,
-    "fast_merge_count": 679,
-    "total_repos": 281,
-    "last_crawl": "2026-11-22T21:41:18.341715Z",
+    "fast_merge_count": 685,
+    "total_repos": 283,
+    "last_crawl": "2026-11-23T02:20:04.850160Z",
     "total_translation_projects": 10
   },
   "top_10": [
@@ -838,6 +838,29 @@
       "agent_score": 85,
       "has_code_block": 1,
       "crawled_at": "2026-10-31T18:05:46.365888Z",
+      "status": "new"
+    },
+    {
+      "id": 6541376471,
+      "repo_name": "Immortal-Protocols/lastbook",
+      "repo_stars": 2957,
+      "repo_url": "https://github.com/Immortal-Protocols/lastbook",
+      "issue_number": 414,
+      "title": "Allow selection of non-default drive (C:\\, D:\\ etc.) for installation",
+      "body": "**The need**\nLaptop users whose space on C:\\ drive (where the system is installed) is limited but who have plenty of space on a nother drive (say, D:\\)\n\n[0001-windows-installer-choose-install-drive.patch](https://github.com/user-attachments/files/35230617/0001-windows-installer-choose-install-drive.patch)\n\n**The idea**\nOn installation Lastbook could prompt for the directory where to install \n\n**Sources**\nNo impact on the sources\n\n**Offline**\nNo conflict with Lastbook's policy to work with no internet and must never send data anywhere. \n\n**Attachment: Claude patch**\nPatch file Claude created in response to this prompt:\n\n```\nHelp me improve Lastbook.\nhttps://github.com/Immortal-Protocols/lastbook\n\nI want the windows distribution to allow selection of the drive (C: or D: or any other) where the user would like to install the lastbook. \n\nRead CONTRIBUTING.md. Make one focused change in a fork, run the relevant tests, and submit a pull request. Explain what changed and what you tested.\n```\n",
+      "html_url": "https://github.com/Immortal-Protocols/lastbook/issues/414",
+      "comments_count": 3,
+      "labels": [
+        "enhancement"
+      ],
+      "language": "Python",
+      "created_at": "2026-11-22T10:36:53Z",
+      "updated_at": "2026-11-23T00:20:25Z",
+      "merge_velocity_hours": 20.7,
+      "merge_verdict": "🔥 CỰC DỄ (TB 20.7h là merge)",
+      "agent_score": 75,
+      "has_code_block": 1,
+      "crawled_at": "2026-11-23T02:20:04.846942Z",
       "status": "new"
     },
     {
@@ -2048,7 +2071,7 @@
     {
       "id": 4528370664,
       "repo_name": "Far-Beyond-Pulsar/Pulsar-Native",
-      "repo_stars": 430,
+      "repo_stars": 432,
       "repo_url": "https://github.com/Far-Beyond-Pulsar/Pulsar-Native",
       "issue_number": 151,
       "title": "Dependency Dashboard",
@@ -2064,9 +2087,9 @@
       ],
       "language": "Rust",
       "created_at": "2026-05-27T00:06:50Z",
-      "updated_at": "2026-11-16T23:58:36Z",
-      "merge_velocity_hours": 15.1,
-      "merge_verdict": "🔥 CỰC DỄ (TB 15.1h là merge)",
+      "updated_at": "2026-11-23T02:19:38Z",
+      "merge_velocity_hours": 5.3,
+      "merge_verdict": "🔥 CỰC DỄ (TB 5.3h là merge)",
       "agent_score": 75,
       "has_code_block": 0,
       "crawled_at": "2026-11-17T00:00:20.041842Z",
@@ -7025,31 +7048,6 @@
       "agent_score": 65,
       "has_code_block": 1,
       "crawled_at": "2026-11-03T15:54:31.099520Z",
-      "status": "new"
-    },
-    {
-      "id": 6128099508,
-      "repo_name": "supabase/supabase-py",
-      "repo_stars": 2623,
-      "repo_url": "https://github.com/supabase/supabase-py",
-      "issue_number": 1893,
-      "title": "storage: analytics bucket errors have the code LibraryError and the raw response body instead of the server's message",
-      "body": "### Describe the bug\n\nWhen an analytics bucket request fails (`create`, `list` or `delete` on `storage.analytics()`), the raised `StorageApiError` has the code `LibraryError` and a message that wraps the raw response body, instead of the server's message and error type.\n\nExpected: `message` is the server's message (`\"Bucket not found\"` in the example below), and `code` is the server's error type (`NoSuchBucket`).\n\n### Reproduction\n\n```python\nimport httpx\nfrom storage3 import SyncStorageClient\n\ndef handler(request):\n    return httpx.Response(\n        404,\n        json={\"error\": {\"message\": \"Bucket not found\", \"type\": \"NoSuchBucket\", \"code\": 404}},\n    )\n\nclient = SyncStorageClient(\n    \"http://localhost/storage/v1\",\n    {\"apiKey\": \"key\"},\n    http_client=httpx.Client(transport=httpx.MockTransport(handler)),\n)\nclient.analytics().delete(\"missing\")\n```\n\nRaises:\n\n```\nstorage3.exceptions.StorageApiError: {'statusCode': 404, 'error': LibraryError, 'message': The request failed, but could not parse error message response:'{\"error\":{\"message\":\"Bucket not found\",\"type\":\"NoSuchBucket\",\"code\":404}}'}\n```\n\n### Steps to reproduce\n\n1. Call `storage.analytics().delete()` for an analytics bucket that does not exist.\n2. Read `message` and `code` on the raised `StorageApiError`.\n\n### Library affected\n\nstorage3\n\n### Library version\n\nstorage3 2.33.0\n\n### Python version\n\npython 3.14.8\n",
-      "html_url": "https://github.com/supabase/supabase-py/issues/1893",
-      "comments_count": 0,
-      "labels": [
-        "bug",
-        "storage",
-        "python"
-      ],
-      "language": "Python",
-      "created_at": "2026-10-30T22:43:34Z",
-      "updated_at": "2026-10-30T22:44:09Z",
-      "merge_velocity_hours": 47.9,
-      "merge_verdict": "✅ DỄ (TB 2.0 ngày là merge)",
-      "agent_score": 65,
-      "has_code_block": 1,
-      "crawled_at": "2026-11-03T07:38:54.884934Z",
       "status": "new"
     }
   ],
