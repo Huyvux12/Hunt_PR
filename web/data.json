@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-11-24T19:59:30.293168+00:00",
+  "generated_at": "2026-11-25T03:30:22.122317+00:00",
   "stats": {
-    "total_issues": 1373,
-    "active_issues": 1356,
+    "total_issues": 1387,
+    "active_issues": 1370,
     "closed_issues": 17,
-    "fast_merge_count": 725,
-    "total_repos": 293,
-    "last_crawl": "2026-11-24T19:59:30.273617Z",
+    "fast_merge_count": 732,
+    "total_repos": 294,
+    "last_crawl": "2026-11-25T03:30:22.102365Z",
     "total_translation_projects": 10
   },
   "top_10": [
@@ -905,6 +905,31 @@
       "agent_score": 85,
       "has_code_block": 1,
       "crawled_at": "2026-10-31T18:05:46.365888Z",
+      "status": "new"
+    },
+    {
+      "id": 6596439962,
+      "repo_name": "vllm-project/vllm-ascend",
+      "repo_stars": 3146,
+      "repo_url": "https://github.com/vllm-project/vllm-ascend",
+      "issue_number": 23165,
+      "title": "[Doc]: DeepSeek-V4.1-Flash 950DT参考官方文档配置环境无法正常拉起服务",
+      "body": "### 📚 The doc issue\n\n**文档链接：**\nhttps://docs.vllm.ai/projects/ascend/en/latest/tutorials/models/DeepSeek-V4.1-Flash.html#41-docker-image-installation\n**存在问题：**\n1. 官方文档提供的HDK版本25.6.3.1不适用于所有系列，现场使用该版本发现不适配，是否有更加详细的HDK配套表。\n2. 参考以下脚本拉起容器，发现服务无法正常拉起。\n```\nexport IMAGE=quay.io/ascend/vllm-ascend:v0.32.0rc1-a5\nexport MODEL_ROOT=\"/data/weights\"\nexport NPU_SMI=\"$(command -v npu-smi)\"\n\ndocker pull \"$IMAGE\"\ndocker run --rm -it \\\n  -e ASCEND_VISIBLE_DEVICES=0-7 \\\n  --name deepseek-v41-950dt \\\n  --net=host \\\n  --shm-size=512g \\\n  -v /usr/local/Ascend/driver:/usr/local/Ascend/driver \\\n  -v \"$MODEL_ROOT:$MODEL_ROOT\" \\\n  \"$IMAGE\" bash\n```\n需要外挂以下路径：\n```\n-v /etc/libibverbs.d/hrn5.driver:/etc/libibverbs.d/hrn5.driver:ro \\\n-v /usr/lib64/libhrn5-rdmav34.so:/usr/lib64/libhrn5-rdmav34.so:ro \\\n```\n\n### Suggest a potential alternative/fix\n\n_No response_",
+      "html_url": "https://github.com/vllm-project/vllm-ascend/issues/23165",
+      "comments_count": 0,
+      "labels": [
+        "documentation",
+        "llm-model",
+        "deepseek"
+      ],
+      "language": "Python",
+      "created_at": "2026-11-25T03:21:42Z",
+      "updated_at": "2026-11-25T03:27:21Z",
+      "merge_velocity_hours": 97.8,
+      "merge_verdict": "⚠️ TRUNG BÌNH (TB 4.1 ngày)",
+      "agent_score": 75,
+      "has_code_block": 1,
+      "crawled_at": "2026-11-25T03:30:22.101084Z",
       "status": "new"
     },
     {
@@ -7019,30 +7044,6 @@
       "agent_score": 65,
       "has_code_block": 1,
       "crawled_at": "2026-11-09T01:28:43.354374Z",
-      "status": "new"
-    },
-    {
-      "id": 6239188158,
-      "repo_name": "kdeldycke/meta-package-manager",
-      "repo_stars": 628,
-      "repo_url": "https://github.com/kdeldycke/meta-package-manager",
-      "issue_number": 2215,
-      "title": "ImportError: cannot import name 'resolve_jobs' from 'click_extra.execution'",
-      "body": "### What happened?\n\nMPM doesn't work anymore. There were some updates to Python Packages and since then I get this error message:\n\n```\nTraceback (most recent call last):\n  File \"/usr/local/bin/mpm\", line 6, in <module>\n    sys.exit(main())\n             ~~~~^^\n  File \"/home/yomama/.local/lib/python3.14/site-packages/meta_package_manager/__main__.py\", line 110, in main\n    from meta_package_manager.pool import pool\n  File \"/home/yomama/.local/lib/python3.14/site-packages/meta_package_manager/pool.py\", line 28, in <module>\n    from .dispatch import warm_availability\n  File \"/home/yomama/.local/lib/python3.14/site-packages/meta_package_manager/dispatch.py\", line 49, in <module>\n    from click_extra.execution import resolve_jobs, run_lanes\nImportError: cannot import name 'resolve_jobs' from 'click_extra.execution' (/home/yomama/.local/lib/python3.14/site-packages/click_extra/execution.py)\n```\nHas this something to do with the waiting release of 8.3.0 (#2186)?\n\nFedora 44 / Python 3.14.10 / click_extra 10.1.1.\n\n### Meta Package Manager configuration\n\n```shell-session\n\n```\n\n### List package managers\n\n```shell-session\n\n```\n\n### Package manager health\n\n```shell-session\n\n```\n\n### Binary path resolution\n\n```shell-session\n\n```\n\n### Meta Package Manager version\n\n```shell-session\n\n```",
-      "html_url": "https://github.com/kdeldycke/meta-package-manager/issues/2215",
-      "comments_count": 1,
-      "labels": [
-        "🐛 bug",
-        "📦 manager: mpm"
-      ],
-      "language": "Python",
-      "created_at": "2026-11-06T08:13:06Z",
-      "updated_at": "2026-11-06T08:48:23Z",
-      "merge_velocity_hours": 26.4,
-      "merge_verdict": "✅ DỄ (TB 1.1 ngày là merge)",
-      "agent_score": 65,
-      "has_code_block": 1,
-      "crawled_at": "2026-11-08T04:51:44.558480Z",
       "status": "new"
     }
   ],
