@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-11-26T07:10:09.475215+00:00",
+  "generated_at": "2026-11-26T18:10:41.667722+00:00",
   "stats": {
-    "total_issues": 1426,
-    "active_issues": 1409,
+    "total_issues": 1441,
+    "active_issues": 1424,
     "closed_issues": 17,
-    "fast_merge_count": 750,
-    "total_repos": 300,
-    "last_crawl": "2026-11-26T07:10:09.454242Z",
+    "fast_merge_count": 753,
+    "total_repos": 303,
+    "last_crawl": "2026-11-26T18:10:41.649454Z",
     "total_translation_projects": 10
   },
   "top_10": [
@@ -905,6 +905,27 @@
       "agent_score": 85,
       "has_code_block": 1,
       "crawled_at": "2026-10-31T18:05:46.365888Z",
+      "status": "new"
+    },
+    {
+      "id": 6517413818,
+      "repo_name": "ArchiveBox/ArchiveBox",
+      "repo_stars": 29102,
+      "repo_url": "https://github.com/ArchiveBox/ArchiveBox",
+      "issue_number": 1980,
+      "title": "Feature Request: run the Docker image with a read-only root filesystem",
+      "body": "### What type of suggestion are you making?\n\nModification of existing behavior\n\n### What is the problem that your feature request solves?\n\nThe Docker image doesn't start with a read-only root filesystem:\n\n```\n$ docker run --rm --user 911:911 --read-only --tmpfs /tmp -v $PWD/data:/data archivebox/archivebox:0.9.73 version\n\n[X] Error: archivebox user (uid=911 gid=911) cannot write to /opt/archivebox.\n    Current owner is 911:911.\n```\n\n`bin/docker_entrypoint.sh` requires `/opt/archivebox`, `ABXPKG_LIB_DIR` and every provider and package directory under it to be writable. During crawls abxpkg also rewrites `derived.env` in those directories, and pdf2doi writes `settings.ini` inside its venv.\n\n### What is your proposed solution?\n\nKeep abxpkg's mutable state out of `ABXPKG_LIB_DIR`, skip the entrypoint's lib checks when the tree is read-only, and point pdf2doi's config at a writable directory. PR to follow.\n\n### What hacks or alternative solutions have you tried to solve the problem?\n\nCopying the lib tree (about 1.4 GB) into a writable volume at startup.\n\n### Share the entire output of the `archivebox version` command for the current version you are using.\n\n```shell\n0.9.73\nArchiveBox v0.9.73 COMMIT_HASH=6f5d2f6 BUILD_TIME=2026-10-06 20:11:16 1791317476\nIN_DOCKER=True IN_QEMU=False ARCH=x86_64 OS=Linux\nPLATFORM=Linux-7.2.12-orbstack-00394-gbecdd6130068-x86_64-with-glibc2.41\nPYTHON=Cpython (venv)\nEUID=911:911 UID=911:911 ARCHIVEBOX_USER=911:911 FS_UID=911:911 FS_PERMS=644\nFS_ATOMIC=True FS_REMOTE=True\nDEBUG=False IS_TTY=False SUDO=False ID=7f391858:0005b0e5 SEARCH_BACKEND=sonic\nLDAP=False\n```\n\nRun with a writable root; with `--read-only` the entrypoint exits first.\n",
+      "html_url": "https://github.com/ArchiveBox/ArchiveBox/issues/1980",
+      "comments_count": 1,
+      "labels": [],
+      "language": "Python",
+      "created_at": "2026-11-20T18:32:38Z",
+      "updated_at": "2026-11-21T07:59:23Z",
+      "merge_velocity_hours": 1.6,
+      "merge_verdict": "🔥 CỰC DỄ (TB 1.6h là merge)",
+      "agent_score": 75,
+      "has_code_block": 1,
+      "crawled_at": "2026-11-26T18:10:41.646231Z",
       "status": "new"
     },
     {
@@ -7008,27 +7029,6 @@
       "agent_score": 65,
       "has_code_block": 1,
       "crawled_at": "2026-11-14T07:25:27.968702Z",
-      "status": "new"
-    },
-    {
-      "id": 6381629183,
-      "repo_name": "sgl-project/sglang",
-      "repo_stars": 38836,
-      "repo_url": "https://github.com/sgl-project/sglang",
-      "issue_number": 50395,
-      "title": "[Bug] NGRAM speculative decoding is not deterministic with --enable-deterministic-inference",
-      "body": "### Checklist\n\n- [x] I searched related issues but found no solution.\n- [x] The bug persists in the latest version.\n\n### Describe the bug\n\nWith `--enable-deterministic-inference --attention-backend triton --speculative-algorithm NGRAM` (Qwen3-0.6B, RTX 4090, main 4a4f400), the same greedy request gives different output depending on which requests the server served before it, even with requests sent one at a time: 8 of 8 probe requests change logprobs and 3 of 8 change tokens within 300 tokens, with the same pattern on every fresh server. Without speculative decoding, and with EAGLE3, outputs are bit-identical. NGRAM builds its draft trees from an n-gram corpus shared across requests, and the deterministic extend kernel gives different bits for a query when masked tree siblings sit between its ancestors (3 of 20 trials in a standalone kernel test). The deterministic-inference docs don’t mention speculative decoding. Would you prefer rejecting NGRAM in deterministic mode, or documenting it? I can send a PR for either.\n\n### Reproduction\n\n```bash\npython -m sglang.launch_server --model-path Qwen/Qwen3-0.6B --attention-backend triton \\\n    --enable-deterministic-inference --speculative-algorithm NGRAM --port 30000\npython repro_ngram_det.py --port 30000 --src <path to sglang>/python/sglang/srt\n```\n\n```python\nimport argparse\nimport glob\n\nimport requests\nfrom transformers import AutoTokenizer\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--port\", type=int, default=30000)\nap.add_argument(\"--src\", default=\"/root/sg/python/sglang/srt\")\na = ap.parse_args()\nurl = f\"http://127.0.0.1:{a.port}\"\ntok = AutoTokenizer.from_pretrained(\"Qwen/Qwen3-0.6B\")\nfiles = sorted(f for f in glob.glob(f\"{a.src}/**/*.py\", recursive=True) if \"managers\" in f and len(open(f).read()) >= 3000)\n\n\ndef gen(text, n=300):\n    r = requests.post(url + \"/generate\", json={\n        \"text\": text, \"return_logprob\": True,\n        \"sampling_params\": {\"temperature\": 0, \"max_new_tokens\": n, \"ignore_eos\": True}}).json()\n    return r[\"output_ids\"], [x[0] for x in r[\"meta_info\"][\"output_token_logprobs\"]]\n\n\nprobes = [open(f).read()[:3000] for f in files[:8]]\nothers = [open(f).read()[:6000] for f in files[8:40]]\nfirst = [gen(p) for p in probes]\nfor o in others:  # unrelated traffic, sequential (no batching at all)\n    gen(o, 64)\nsecond = [gen(p) for p in probes]\nfor i, ((ids1, lp1), (ids2, lp2)) in enumerate(zip(first, second)):\n    tok_div = next((j for j, (x, y) in enumerate(zip(ids1, ids2)) if x != y), None)\n    lp_div = next((j for j, (x, y) in enumerate(zip(lp1, lp2)) if x != y), None)\n    print(f\"probe {i}: first token mismatch at {tok_div}, first logprob mismatch at {lp_div}\")\n```\n\n### Environment\n\nRTX 4090, SGLang main 4a4f400, torch 2.14.1+cu130, triton 3.8.0.\n",
-      "html_url": "https://github.com/sgl-project/sglang/issues/50395",
-      "comments_count": 0,
-      "labels": [],
-      "language": "Python",
-      "created_at": "2026-11-13T23:07:09Z",
-      "updated_at": "2026-11-13T23:07:09Z",
-      "merge_velocity_hours": 62.7,
-      "merge_verdict": "✅ DỄ (TB 2.6 ngày là merge)",
-      "agent_score": 65,
-      "has_code_block": 1,
-      "crawled_at": "2026-11-14T00:43:47.941468Z",
       "status": "new"
     }
   ],
