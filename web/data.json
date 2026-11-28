@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-11-28T03:07:49.766210+00:00",
+  "generated_at": "2026-11-28T12:45:04.065030+00:00",
   "stats": {
-    "total_issues": 1484,
-    "active_issues": 1467,
+    "total_issues": 1493,
+    "active_issues": 1476,
     "closed_issues": 17,
-    "fast_merge_count": 791,
-    "total_repos": 306,
-    "last_crawl": "2026-11-28T03:07:49.744887Z",
+    "fast_merge_count": 793,
+    "total_repos": 308,
+    "last_crawl": "2026-11-28T12:45:04.045659Z",
     "total_translation_projects": 10
   },
   "top_10": [
